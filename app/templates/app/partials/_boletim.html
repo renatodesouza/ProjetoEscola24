@@ -1,0 +1,117 @@
+<div class="modal" id="id02">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header w3-bar w3-theme-d2">
+          <h4 class="modal-title">Boletim</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="container mt-3">
+            <div class="row">
+              <div class="col-md-3">
+                <h3>Aluno: {{ aluno }}</h3>
+                <p>RA: {{ aluno.ra }}</p>
+              </div>
+              <div class="col-md-5">
+                <h3>Curso: {{ curso }}</h3>
+                <p>{{ turma.turma }} | {{ turma.semestre }}</p>
+              </div>
+            </div><hr>            
+            <table class="table  table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Disciplina</th>
+                  <th>Turma</th>
+                  <th>C.H</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for disciplina in disciplinas %}
+                  <tr data-bs-toggle="collapse" data-bs-target="#disciplina-{{ disciplina.id }}" class="accordion-toggle">
+                    <td>{{ disciplina.nome }}</td>
+                    <td>{{ turma }}</td>
+                    <td>{{ disciplina.carga_horaria }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="8">
+                      <div class="collapse" id="disciplina-{{ disciplina.id }}">
+                        <table class="table table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th>Atividade</th>
+                              <th>Titulo</th>
+                              <th>Data Entrega</th>
+                              <th>Status</th>
+                              <th>Nota</th>
+                              <th>Media</th>
+                              <th>Prova</th>
+                              <th>TF</th>
+                              <th>MF</th>
+                              <th>Situação</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for entrega in entregas %}
+                            
+                              {% if entrega.atividade.disciplina == disciplina %} 
+                              <tr>
+                                <td>{{ entrega.atividade.atividade }}</td>
+                                <td>{{ entrega.atividade }}</td>
+                                <td>{{ entrega.dt_entrega }}</td>
+
+                                {% if entrega.status == 'COR' %}
+                                <td><button class="btn btn-success">{{ entrega.status }}</button></td>
+                                {% elif entrega.status == 'ENT' %}
+                                <td><button class="btn btn-info">{{ entrega.status }}</button></td>
+                                {% else %}
+                                <td><button class="btn btn-warning">{{ entrega.status }}</button></td>
+                                {% endif %}
+
+                                <td>{{ entrega.nota }}</td>
+                                <td>media</td>
+                                <td>Prova</td>
+                                <td>faltas</td>
+                                <td>media final</td>
+                                <td>situacao</td>
+                              </tr>
+                              {% endif %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+  
+        <!-- Modal footer -->
+        <div class="modal-footer w3-bar w3-theme-d2">
+          <div class="container"> 
+            <div class="row">
+              <div class="col-sm-9">
+                <p style="margin-bottom: 0%;">TF - Total Faltas</p>
+                <p style="margin-bottom: 0%;">MF - Media Final</p>
+                <p style="margin-bottom: 0%;">C.H - Carga Horaria</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" style="display: grid; justify-content: end;">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+  

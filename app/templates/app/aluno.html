@@ -1,0 +1,250 @@
+{% extends 'app/base_usuario.html' %}
+{% load static %}
+
+{% block content_aluno %}
+<!-- Navbar -->
+{% include 'app/partials/_usuario_navbar.html' %}
+{% include 'app/partials/_nova_mensagem.html' %}
+{% include 'app/partials/_mensagem.html' %}
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
+  <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+</div>
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- INFORMACOES DO ALUNO FOTO RA ETC... -->
+    <!-- Left Column -->
+    <div class="w3-col m3">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         
+         <p class="w3-center"><img src="{{ aluno.imagem.url }}" class="w3-circle" style="height:106px;width:106px" alt="{{ aluno }}"></p>
+         <h4 class="w3-center">{{ aluno.usuario.first_name }}</h4>
+         <hr>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>RA: {{ aluno.ra }}</p>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{ turma.turma }}</p>
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{ turma.semestre }}</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>{{ curso }}</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>{{ aluno.usuario.email }}</p>
+        </div>
+      </div>
+      <br>
+      
+      <!-- Accordion Partials-->
+      <div class="w3-card w3-round">
+        <div class="w3-white">
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Disciplinas</button>
+          <div id="Demo1" class="w3-hide w3-container">
+            {% for disciplina in disciplinas %}
+            <div>
+              <a href="">{{ disciplina.nome }}</a>
+            </div>
+            {% endfor %}
+          </div>
+          <button  data-bs-toggle="modal" data-bs-target="#id02"
+            class="w3-button w3-block w3-theme-l1 w3-left-align">
+            <i class="fa fa-users fa-fw w3-margin-right"></i>Boletim</button>
+         
+          <div id="Demo2" class="w3-hide w3-container">
+            <a href="{% url 'app:boletim' %}">Boletim</a>
+          </div>
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
+          <div id="Demo3" class="w3-hide w3-container">
+         <div class="w3-row-padding">
+         <br>
+           <div class="w3-half">
+             <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+         </div>
+          </div>
+        </div>      
+      </div>
+      <br>
+      
+      <!-- Interests Partials--> 
+      <div class="w3-card w3-round w3-white w3-hide-small">
+        <div class="w3-container">
+          <p>Cursos</p>
+          <p>
+            {% for curso in cursos %}
+            <a href="{% url 'app:curso' curso.id %}"><span class="w3-tag w3-small w3-theme-d5">{{ curso.nome }}</span></a>
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+      <br>
+      
+      
+    </div>
+    
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+    
+      <div class="w3-row-padding">
+        <div class="w3-col m12">
+          <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+              {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Sucess! </strong><p>{{ message }}</p>
+              </div>
+              {% endfor %}
+              <h6 class="w3-opacity">Social Media template by w3.css</h6>
+              <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
+              <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- EXIBIR INFORMACOES IMPORTANTES DE DISCIPLINAS ATIVIDADES -->
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        <!-- <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"> -->
+        {% for atividade in atividades %}
+          <div>
+            <span class="w3-right w3-tag w3-small w3-theme-l2">Data de inicio: {{ atividade.dt_inicio }}</span>
+            <h3>Disciplina: {{ atividade.disciplina.nome }}</h3>
+            <h4>Atividades: {{ atividade.titulo }}</h4>
+            <hr class="w3-clear">
+            <p>{{ atividade.descricao }}</p>
+            
+            {% if atividade.status == 'ABERTA' %}
+            <p><button onclick="abrirModal(
+              '{{ atividade.titulo }}', '{{ atividade.descricao }}', '{{ atividade.professor.id }}', '{{ atividade.id }}', '{{ atividade.professor }}', '{{ aluno.id }}'
+              )" data-id="{{ atividade.id }}"
+              class="w3-button w3-theme-d1 w3-margin-bottom">Entregar</button></p>
+            {% elif atividade.status == 'PRORROGADA' %}
+              <button type="button" onclick="document.getElementById('id03').style.display='block'" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Prorrogada</button>
+            {% else %}
+            <p><button class="w3-button w3-red w3-margin-bottom" disabled><i class="fa fa-thumbs-up"></i> Fechada</button></p>
+            {% endif %}
+              <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> Comentário</button> 
+            <span class="w3-right w3-tag w3-small w3-theme-l2">Data de fim: {{ atividade.dt_fim }}</span>
+            <hr class="w3-clear">
+          </div>
+        {% endfor %}
+      </div>
+      <hr class="w3-clear">
+      <!-- FIM INFORMACOES -->
+           
+    <!-- End Middle Column -->
+    </div>
+    
+    <!-- ESPACO PARA AVISOS -->
+    <!-- Right Column -->
+    <div class="w3-col m2">
+      <div class="w3-card w3-round w3-white w3-center">
+        <div class="w3-container">
+          <p>Atividade para entregar</p>
+
+          {% for atividade in atividades_limit %}
+            <p><strong>{{ atividade.disciplina.nome }}</strong></p>
+            <p>{{ atividade.titulo }}</p>
+            
+            {% if atividade in atividades_entregues %}
+                <p><button class="w3-button w3-block w3-green w3-section" disabled>Entregue</button></p>
+            {% elif atividade.status == 'ABERTA' %}
+                <p><button onclick="abrirModal(
+                    '{{ atividade.titulo }}', '{{ atividade.descricao }}', '{{ atividade.professor.id }}', '{{ atividade.id }}', '{{ atividade.professor }}', '{{ aluno.id }}'
+                    )" data-id="{{ atividade.id }}"
+                    class="w3-button w3-block w3-green w3-section">Entregar</button></p>
+            {% elif atividade.status == 'PRORROGADA' %}
+                <p><button onclick="editaEntrega()" data-id="{{ atividade.id }}"
+                    class="w3-button w3-block w3-yellow w3-section">Prorrogada</button></p>
+            {% else %}
+                <p><button class="w3-button w3-block w3-red w3-section" disabled>Fechada</button></p>
+            {% endif %}
+            
+            <hr class="w3-clear">
+          
+          {% endfor %}
+        </div>
+      </div>
+      <br>
+
+      <!-- MODAL INICIO -->
+      {% include 'app/partials/_entrega_atividade_form.html' %}
+      {% include 'app/partials/_edita_entrega_atividade_form.html' %}
+      
+      <!-- FIM MODAL -->
+
+      <!--Modal boletim-->
+      {% include 'app/partials/_boletim.html' %}
+      <!--Fim Modal boletim-->
+      
+      <!-- ATIVIDADE PARA ENTREGAR -->
+      <div class="w3-card w3-round w3-white w3-center">
+        <p>Mensagens</p>
+        {% for mensagem in mensagens_recebidas %}
+        <div class="w3-container">
+          
+          <span>{{ mensagem.remetente }}</span>
+          <p>Assunto: {{ mensagem.assunto }}</p>
+          <div class="w3-row w3-opacity">
+            <div class="w3-half">
+              <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
+            </div>
+            <div class="w3-half">
+              <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
+            </div>
+          </div><hr>
+        </div>
+        {% endfor %}
+      </div>
+      <br>
+      
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
+
+  
+
+ 
+
+
+<!-- Footer-->
+<footer class="w3-container w3-theme-d3 w3-padding-16">
+  <h5>Footer</h5>
+  <a href="https://www.flaticon.com/br/icones-gratis/logotipo-do-instagram" title="logotipo do instagram ícones">Logotipo do instagram ícones criados por Pixel perfect - Flaticon</a>
+</footer>
+{% endblock %}
+
+ <!-- Inclua as bibliotecas JS do Bootstrap 5 no final do arquivo -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+ 
+
+
+
+
+
+
