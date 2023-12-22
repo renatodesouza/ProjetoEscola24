@@ -3,9 +3,9 @@
 
 {% block content_aluno %}
 <!-- Navbar -->
-{% include 'app/partials/_usuario_navbar.html' %}
-{% include 'app/partials/_nova_mensagem.html' %}
-{% include 'app/partials/_mensagem.html' %}
+{% include 'app/partials/nav/_usuario_navbar.html' %}
+{% include 'app/partials/mensagens/_modal_nova_mensagem.html' %}
+{% include 'app/partials/mensagens/_modal_mensagem_recebida.html' %}
 
 <!-- Navbar on small screens -->
 <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
@@ -40,46 +40,20 @@
       
       <!-- Accordion Partials-->
       <div class="w3-card w3-round">
+        
         <div class="w3-white">
-          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Disciplinas</button>
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Secretaria</button>
           <div id="Demo1" class="w3-hide w3-container">
             {% for disciplina in disciplinas %}
             <div>
-              <a href="">{{ disciplina.nome }}</a>
+              <a href=""><span class="w3-tag w3-small w3-theme-d5">{{ disciplina.nome }}</span></a>
             </div>
             {% endfor %}
           </div>
-          <button  data-bs-toggle="modal" data-bs-target="#id02"
-            class="w3-button w3-block w3-theme-l1 w3-left-align">
-            <i class="fa fa-users fa-fw w3-margin-right"></i>Boletim</button>
-         
-          <div id="Demo2" class="w3-hide w3-container">
-            <a href="{% url 'app:boletim' %}">Boletim</a>
-          </div>
-          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
-          <div id="Demo3" class="w3-hide w3-container">
-         <div class="w3-row-padding">
-         <br>
-           <div class="w3-half">
-             <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/snow.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-         </div>
-          </div>
+          <button  data-bs-toggle="modal" data-bs-target="#id02" class="w3-button w3-block w3-theme-l1 w3-left-align">
+            <i class="fa fa-pencil fa-fw w3-margin-right"></i>Boletim
+          </button>
+          {% include 'app/partials/_secretaria.html' %}
         </div>      
       </div>
       <br>
@@ -96,8 +70,6 @@
         </div>
       </div>
       <br>
-      
-      
     </div>
     
     <!-- Middle Column -->
@@ -108,10 +80,10 @@
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
               {% for message in messages %}
-              <div class="alert alert-success alert-dismissible fade show">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                <strong>Sucess! </strong><p>{{ message }}</p>
-              </div>
+                <div class="alert alert-success alert-dismissible fade show">
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  <strong>Sucess! </strong><p>{{ message }}</p>
+                </div>
               {% endfor %}
               <h6 class="w3-opacity">Social Media template by w3.css</h6>
               <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
@@ -120,6 +92,7 @@
           </div>
         </div>
       </div>
+
       <!-- EXIBIR INFORMACOES IMPORTANTES DE DISCIPLINAS ATIVIDADES -->
       <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
         <!-- <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"> -->
@@ -149,79 +122,32 @@
       </div>
       <hr class="w3-clear">
       <!-- FIM INFORMACOES -->
-           
-    <!-- End Middle Column -->
     </div>
+    <!-- End Middle Column -->
     
     <!-- ESPACO PARA AVISOS -->
-    <!-- Right Column -->
-    <div class="w3-col m2">
-      <div class="w3-card w3-round w3-white w3-center">
-        <div class="w3-container">
-          <p>Atividade para entregar</p>
+      <!-- Right Column -->
+      <div class="w3-col m2">
+        <!--PARTIALS ATIVIDADE PARA ENTREGAR-->
+        {% include 'app/partials/atividades/_entrega_atividade.html' %}
 
-          {% for atividade in atividades_limit %}
-            <p><strong>{{ atividade.disciplina.nome }}</strong></p>
-            <p>{{ atividade.titulo }}</p>
-            
-            {% if atividade in atividades_entregues %}
-                <p><button class="w3-button w3-block w3-green w3-section" disabled>Entregue</button></p>
-            {% elif atividade.status == 'ABERTA' %}
-                <p><button onclick="abrirModal(
-                    '{{ atividade.titulo }}', '{{ atividade.descricao }}', '{{ atividade.professor.id }}', '{{ atividade.id }}', '{{ atividade.professor }}', '{{ aluno.id }}'
-                    )" data-id="{{ atividade.id }}"
-                    class="w3-button w3-block w3-green w3-section">Entregar</button></p>
-            {% elif atividade.status == 'PRORROGADA' %}
-                <p><button onclick="editaEntrega()" data-id="{{ atividade.id }}"
-                    class="w3-button w3-block w3-yellow w3-section">Prorrogada</button></p>
-            {% else %}
-                <p><button class="w3-button w3-block w3-red w3-section" disabled>Fechada</button></p>
-            {% endif %}
-            
-            <hr class="w3-clear">
-          
-          {% endfor %}
-        </div>
+        <!-- MODAL INICIO -->
+          {% include 'app/partials/atividades/_modal_entrega_atividade_form.html' %}
+          {% include 'app/partials/atividades/_modal_edita_entrega_atividade_form.html' %}
+        <!-- FIM MODAL -->
+
+        <!--MODAL BOLETIM-->
+          {% include 'app/partials/_boletim.html' %}
+        <!--FIM MODAL BOLETIM-->
+        
+        <!-- PARTIALS MENSAGENS RECEBIDAS-->
+        {% include 'app/partials/mensagens/_mensagem_recebida.html' %}
+        
       </div>
-      <br>
-
-      <!-- MODAL INICIO -->
-      {% include 'app/partials/_entrega_atividade_form.html' %}
-      {% include 'app/partials/_edita_entrega_atividade_form.html' %}
-      
-      <!-- FIM MODAL -->
-
-      <!--Modal boletim-->
-      {% include 'app/partials/_boletim.html' %}
-      <!--Fim Modal boletim-->
-      
-      <!-- ATIVIDADE PARA ENTREGAR -->
-      <div class="w3-card w3-round w3-white w3-center">
-        <p>Mensagens</p>
-        {% for mensagem in mensagens_recebidas %}
-        <div class="w3-container">
-          
-          <span>{{ mensagem.remetente }}</span>
-          <p>Assunto: {{ mensagem.assunto }}</p>
-          <div class="w3-row w3-opacity">
-            <div class="w3-half">
-              <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
-            </div>
-            <div class="w3-half">
-              <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
-            </div>
-          </div><hr>
-        </div>
-        {% endfor %}
-      </div>
-      <br>
-      
-    <!-- End Right Column -->
-    </div>
-    
-  <!-- End Grid -->
+      <!-- End Right Column -->
   </div>
-  
+  <!-- End Grid -->
+
 <!-- End Page Container -->
 </div>
 <br>
