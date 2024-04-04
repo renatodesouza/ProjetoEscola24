@@ -365,5 +365,6 @@ class MensagemViews(CreateView):
                 
                 Mensagem.objects.create(remetente=remetente, destinatario=destinatario,
                                          assunto=assunto, mensagem=mensagem, dt_envio=data_envio)
+                
             return redirect('app:aluno', self.request.user.id)
         return redirect('app:mensagem')

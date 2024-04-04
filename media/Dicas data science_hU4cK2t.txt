@@ -1,0 +1,50 @@
+Data Science Python
+
+Importando o pandas
+
+import pandas as pd
+
+
+Lendo arquivo csv
+
+notas = pd.read_csv('ratings.csv')
+
+
+Exibindo as cinco primeiras linhas da tabela
+
+notas.head()
+
+Exibindo a quantidade de linhas e colunas
+
+notas.shape
+
+
+Alterando o nome das colunas
+
+notas.columns = ['usuarioId', 'filemId', 'nota', 'momento']
+
+Exibindo dados de uma unica coluna
+
+notas['nota']
+
+Exibindo valores unicos de uma coluna
+
+notas['nota'].unique()
+
+Contar quantas vezes um determinado valor aparece em uma coluna
+
+notas['nota'].value_counts()
+
+---------------------------------------------------------------------------------
+
+Aula dois 
+
+Gerando um grafico
+
+notas.nota.plot(kind='hist')
+
+Exibindo uma descricao dos dados
+
+notas.nota.describe()
+
+
