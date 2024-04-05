@@ -126,7 +126,7 @@ class AlunoView(DetailView):
         context['curso'] = matricula.curso
         context['disciplinas'] = matricula.turma.disciplina.all()
         context['atividades'] = atividades
-        context['atividades_limit'] = atividades.order_by('?')[:2]
+        context['atividades_limit'] = atividades.order_by('?')[:3]
         
         context['professores'] = Professor.objects.all()
         context['mensagens'] = Mensagem.objects.filter(remetente=usuario.id).order_by('?')[:3]
@@ -366,5 +366,7 @@ class MensagemViews(CreateView):
                 Mensagem.objects.create(remetente=remetente, destinatario=destinatario,
                                          assunto=assunto, mensagem=mensagem, dt_envio=data_envio)
                 
+                
+                
             return redirect('app:aluno', self.request.user.id)
-        return redirect('app:mensagem')
+        return redirect('app:aluno', self.request.user.id)
