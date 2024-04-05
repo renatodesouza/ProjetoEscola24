@@ -1,0 +1,8 @@
+
+<!--Mensagem de sucesso login-->
+{% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong>Sucess! </strong><p>{{ message }}</p>
+    </div>
+{% endfor %}
