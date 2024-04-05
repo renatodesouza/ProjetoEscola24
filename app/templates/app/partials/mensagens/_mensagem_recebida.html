@@ -1,9 +1,12 @@
+
+{% if mensagens_recebidas %}
 <div class="w3-card w3-round w3-white w3-center">
     <p>Mensagens</p>
     {% for mensagem in mensagens_recebidas %}
         <div class="w3-container">
             <span>{{ mensagem.remetente }}</span>
             <p>Assunto: {{ mensagem.assunto }}</p>
+            <p>Mensagem: {{ mensagem.mensagem }}</p>
             <div class="w3-row w3-opacity">
                 <div class="w3-half">
                 <button class="w3-button w3-block w3-green w3-section" title="Accept"><i class="fa fa-check"></i></button>
@@ -16,3 +19,4 @@
     {% endfor %}
 </div>
 <br>
+{% endif %}
