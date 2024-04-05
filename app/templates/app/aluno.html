@@ -7,13 +7,7 @@
 {% include 'app/partials/mensagens/_modal_nova_mensagem.html' %}
 {% include 'app/partials/mensagens/_modal_mensagem_recebida.html' %}
 
-<!-- Navbar on small screens -->
-<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
-</div>
+
 
 <!-- Page Container -->
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
@@ -23,108 +17,31 @@
     <!-- Left Column -->
     <div class="w3-col m3">
       <!-- Profile -->
-      <div class="w3-card w3-round w3-white">
-        <div class="w3-container">
-         
-         <p class="w3-center"><img src="{{ aluno.imagem.url }}" class="w3-circle" style="height:106px;width:106px" alt="{{ aluno }}"></p>
-         <h4 class="w3-center">{{ aluno.usuario.first_name }}</h4>
-         <hr>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>RA: {{ aluno.ra }}</p>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{ turma.turma }}</p>
-         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{ turma.semestre }}</p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>{{ curso }}</p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>{{ aluno.usuario.email }}</p>
-        </div>
-      </div>
-      <br>
+      {% include 'app/partials/aluno/_profile_aluno.html' %}
       
       <!-- Accordion Partials-->
       <div class="w3-card w3-round">
-        
         <div class="w3-white">
-          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Secretaria</button>
-          <div id="Demo1" class="w3-hide w3-container">
-            {% for disciplina in disciplinas %}
-            <div>
-              <a href=""><span class="w3-tag w3-small w3-theme-d5">{{ disciplina.nome }}</span></a>
-            </div>
-            {% endfor %}
-          </div>
-          <button  data-bs-toggle="modal" data-bs-target="#id02" class="w3-button w3-block w3-theme-l1 w3-left-align">
-            <i class="fa fa-pencil fa-fw w3-margin-right"></i>Boletim
-          </button>
-          {% include 'app/partials/_secretaria.html' %}
+          {% include 'app/partials/administracao/_disciplina.html' %}
+
+          {% include 'app/partials/administracao/_boletim.html' %}
+          
+          {% include 'app/partials/administracao/_secretaria.html' %}
         </div>      
       </div>
       <br>
       
-      <!-- Interests Partials--> 
-      <div class="w3-card w3-round w3-white w3-hide-small">
-        <div class="w3-container">
-          <p>Cursos</p>
-          <p>
-            {% for curso in cursos %}
-            <a href="{% url 'app:curso' curso.id %}"><span class="w3-tag w3-small w3-theme-d5">{{ curso.nome }}</span></a>
-            {% endfor %}
-          </p>
-        </div>
-      </div>
-      <br>
+      <!-- Cursos Partials--> 
+      {% include 'app/partials/administracao/_cursos.html' %}
     </div>
     
     <!-- Middle Column -->
     <div class="w3-col m7">
     
-      <div class="w3-row-padding">
-        <div class="w3-col m12">
-          <div class="w3-card w3-round w3-white">
-            <div class="w3-container w3-padding">
-              <!--Mensagem ao fazer login-->
-              {% for message in messages %}
-                <div class="alert alert-success alert-dismissible fade show">
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                  <strong>Sucess! </strong><p>{{ message }}</p>
-                </div>
-              {% endfor %}
-
-              <h6 class="w3-opacity">Social Media template by w3.css</h6>
-              <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
-              <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button> 
-            </div>
-          </div>
-        </div>
-      </div>
+      {% include 'app/partials/coluna_central/_pesquisa.html' %}
 
       <!-- EXIBIR INFORMACOES IMPORTANTES DE DISCIPLINAS ATIVIDADES -->
-      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <!-- <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"> -->
-        {% for atividade in atividades %}
-          <div>
-            <span class="w3-right w3-tag w3-small w3-theme-l2">Data de inicio: {{ atividade.dt_inicio }}</span>
-            <h3>Disciplina: {{ atividade.disciplina.nome }}</h3>
-            <h4>Atividades: {{ atividade.titulo }}</h4>
-            <hr class="w3-clear">
-            <p>{{ atividade.descricao }}</p>
-            
-            {% if atividade in atividades_entregues %}
-              <p><button class="w3-button w3-theme-d1 w3-margin-bottom" disabled>Entregue</button></p>
-            {% elif atividade.status == 'ABERTA' %}
-              <p><button onclick="abrirModal(
-                '{{ atividade.titulo }}', '{{ atividade.descricao }}', '{{ atividade.professor.id }}', '{{ atividade.id }}', '{{ atividade.professor }}', '{{ aluno.id }}'
-                )" data-id="{{ atividade.id }}"
-                class="w3-button w3-theme-d1 w3-margin-bottom">Entregar</button></p>
-            {% elif atividade.status == 'PRORROGADA' %}
-              <button type="button" onclick="document.getElementById('id03').style.display='block'" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Prorrogada</button>
-            {% else %}
-            <p><button class="w3-button w3-red w3-margin-bottom" disabled><i class="fa fa-thumbs-up"></i> Fechada</button></p>
-            {% endif %}
-              <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> Comentário</button> 
-            <span class="w3-right w3-tag w3-small w3-theme-l2">Data de fim: {{ atividade.dt_fim }}</span>
-            <hr class="w3-clear">
-          </div>
-        {% endfor %}
-      </div>
-      <hr class="w3-clear">
+      {% include 'app/partials/coluna_central/_atividades.html' %}
       <!-- FIM INFORMACOES -->
     </div>
     <!-- End Middle Column -->
@@ -139,10 +56,6 @@
           {% include 'app/partials/atividades/_modal_entrega_atividade_form.html' %}
           {% include 'app/partials/atividades/_modal_edita_entrega_atividade_form.html' %}
         <!-- FIM MODAL -->
-
-        <!--MODAL BOLETIM-->
-          {% include 'app/partials/_boletim.html' %}
-        <!--FIM MODAL BOLETIM-->
         
         <!-- PARTIALS MENSAGENS RECEBIDAS-->
         {% include 'app/partials/mensagens/_mensagem_recebida.html' %}
@@ -156,16 +69,9 @@
 </div>
 <br>
 
-  
-
- 
-
 
 <!-- Footer-->
-<footer class="w3-container w3-theme-d3 w3-padding-16">
-  <h5>Footer</h5>
-  <a href="https://www.flaticon.com/br/icones-gratis/logotipo-do-instagram" title="logotipo do instagram ícones">Logotipo do instagram ícones criados por Pixel perfect - Flaticon</a>
-</footer>
+{% include 'app/partials/footer/_footer.html' %}
 {% endblock %}
 
  <!-- Inclua as bibliotecas JS do Bootstrap 5 no final do arquivo -->

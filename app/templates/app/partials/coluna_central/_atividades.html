@@ -1,0 +1,29 @@
+<div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+    <!-- <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"> -->
+    {% for atividade in atividades %}
+      <div>
+        <span class="w3-right w3-tag w3-small w3-theme-l2">Data de inicio: {{ atividade.dt_inicio }}</span>
+        <h3>Disciplina: {{ atividade.disciplina.nome }}</h3>
+        <h4>Atividades: {{ atividade.titulo }}</h4>
+        <hr class="w3-clear">
+        <p>{{ atividade.descricao }}</p>
+        
+        {% if atividade in atividades_entregues %}
+          <p><button class="w3-button w3-theme-d1 w3-margin-bottom" disabled>Entregue</button></p>
+        {% elif atividade.status == 'ABERTA' %}
+          <p><button onclick="abrirModal(
+            '{{ atividade.titulo }}', '{{ atividade.descricao }}', '{{ atividade.professor.id }}', '{{ atividade.id }}', '{{ atividade.professor }}', '{{ aluno.id }}'
+            )" data-id="{{ atividade.id }}"
+            class="w3-button w3-theme-d1 w3-margin-bottom">Entregar</button></p>
+        {% elif atividade.status == 'PRORROGADA' %}
+          <button type="button" onclick="document.getElementById('id03').style.display='block'" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> Prorrogada</button>
+        {% else %}
+        <p><button class="w3-button w3-red w3-margin-bottom" disabled><i class="fa fa-thumbs-up"></i> Fechada</button></p>
+        {% endif %}
+          <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> Comentário</button> 
+        <span class="w3-right w3-tag w3-small w3-theme-l2">Data de fim: {{ atividade.dt_fim }}</span>
+        <hr class="w3-clear">
+      </div>
+    {% endfor %}
+  </div>
+  <hr class="w3-clear">
