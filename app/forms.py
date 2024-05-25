@@ -78,7 +78,10 @@ class AtividadeForm(forms.ModelForm):
 
 #-------------CURSO FORM------------------------------
 class CursoForm(forms.ModelForm):
-    coordenadores = Coordenador.objects.all()
+
+    def __init__(self, *args, **kwargs):
+        super(CursoForm, self).__init__(*args, **kwargs)
+        self.fields['coordenador'].queryset = Coordenador.objects.all()
 
     class Meta:
         model = Curso
@@ -115,7 +118,7 @@ class CursoForm(forms.ModelForm):
     )
 
     coordenador = forms.ModelChoiceField(
-        queryset=coordenadores,
+        queryset=Coordenador.objects.all(),
         empty_label='Selecione um coordenador',
         label = 'Coordenador',
         required = True,

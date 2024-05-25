@@ -1,6 +1,7 @@
 from typing import Any, List, Optional, Tuple, Union
 from django.contrib import admin
 from django.db.models.query import Q, QuerySet
+from django.db.models import Q
 
 from django.http.request import HttpRequest
 from .models.atividade import Atividade
@@ -206,7 +207,8 @@ class MensagemAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
         if request.user.is_superuser:
             return queryset
-        return queryset.filter(aluno__usuario=request.user)\
-            or queryset.filter(professor__usuario=request.user)
+        
+        return queryset.filter(Q(remetente=request.user) | Q(destinatario=request.user))
+                
     
     

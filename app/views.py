@@ -78,13 +78,8 @@ class CursoCreateView(CreateView):
     def post(self, request, **kwargs):
         if request.method == 'POST':
             curso_form = CursoForm(request.POST, request.FILES)
-            print('#######################################################################')
-            print(request.POST)
-            print('-----------------------------------------------------------------')
-            print('formulario', curso_form.errors)
-            print('-----------------------------------------------------------------')
+            
             if curso_form.is_valid():
-                print('esse form e valido')
                 nome = curso_form.cleaned_data['nome']
                 descricao = curso_form.cleaned_data['descricao']
                 coordenador = curso_form.cleaned_data['coordenador']
@@ -95,11 +90,11 @@ class CursoCreateView(CreateView):
                 if imagem:
                     caminho_imagem = default_storage.save(imagem.name, imagem)
     
-                curso = Curso.objects.create(nome=nome, descricao=descricao, coordenador=coordenador, periodo=periodo, modalidade=modalidade, imagem=caminho_imagem)
-                print('criou o objeto')
+                Curso.objects.create(nome=nome, descricao=descricao, coordenador=coordenador, periodo=periodo, modalidade=modalidade, imagem=caminho_imagem)
+            
                 return redirect('app:cursos')
             else:
-                print('nao e valido')
+                
                 return redirect('app:curso_form_create')
 
 
@@ -280,14 +275,13 @@ def my_login(request):
             pswd = form.cleaned_data['password']
 
             user = authenticate(request, username=nome, password=pswd)
-        
     
         if user is not None:
             login(request, user)
             if user.is_staff:
                 return redirect('app:professor', user.id)
             
-            messages.success(request, f'Bem vindo {nome}, login efetuado com sucesso.')
+            messages.success(request, f'Bem vindo {user.first_name}, login efetuado com sucesso.')
             return redirect('app:aluno', user.id)
         else:
             messages.error(request, 'Usuario ou senha incorretos')
@@ -303,6 +297,41 @@ def my_logout(request):
     
 
 #---------------------------------------------------------------------------------------
+#-------------Criação entrega de atividade CBV------------------------------------------
+
+class EntregaAtividadeView(CreateView):
+    template_name = 'app/partials/_entrega_atividade.html'
+    model = EntregaAtividade
+    form_class = EntregaAtividadeForm
+    success_url = reverse_lazy('app:aluno')
+
+    def get_context_data(self, **kwargs):
+        usuario = self.request.user
+        context = super(EntregaAtividadeView, self).get_context_data(**kwargs)
+        context['form_atividade'] = EntregaAtividadeForm()
+        return context
+    
+    def post(self, request, **kwargs):
+        if request.method == 'POST':
+            form_atividade = EntregaAtividadeForm(request.POST)
+
+            if form_atividade.is_valid():
+                aluno_id = get_object_or_404(User, pk=form_atividade.cleaned_data['aluno'].id)
+                professor_id = get_object_or_404(User, pk=form_atividade.cleaned_data['professor'].id)
+                atividade_id = get_object_or_404(Atividade, pk=form_atividade.cleaned_data['atividade'].id)
+
+                resposta = form_atividade.cleaned_data['resposta']
+                dt_entrega = form_atividade.cleaned_data['data_atual']
+                arq = form_atividade.cleaned_data['arquivo']
+
+                if arq:
+                    caminho_arq = default_storage.save(arq.name, arq)
+
+                EntregaAtividade.objects.create(resposta=resposta, status='ENT',
+                                                aluno=aluno_id, atividade=atividade_id, professor=professor_id,
+                                                dt_entrega=dt_entrega, file=caminho_arq)
+        return redirect('app:aluno', self.request.user.id)
+                
 
 #---------------------CRIACAO DE ENTREGA DE ATIVIDADES----------------------------------
 
@@ -335,7 +364,7 @@ def edita_entrega_atividade(request):
     pass
 
 
-
+#--------------------------------------------------------------------------------------------------------------------------
 class MensagemViews(CreateView):
     template_name = 'app/partials/_nova_mensagem.html'
     model = Mensagem
@@ -361,12 +390,11 @@ class MensagemViews(CreateView):
                 assunto = mensagem_form.cleaned_data['assunto']
                 mensagem = mensagem_form.cleaned_data['mensagem']
                 data_envio = timezone.now()
-
                 
                 Mensagem.objects.create(remetente=remetente, destinatario=destinatario,
                                          assunto=assunto, mensagem=mensagem, dt_envio=data_envio)
                 
-                
+
                 
             return redirect('app:aluno', self.request.user.id)
         return redirect('app:aluno', self.request.user.id)
