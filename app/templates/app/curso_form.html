@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <title>Login</title>
-</head>
-<body>
+{% extends 'app/base_curso.html' %}
+
+{% block content_curso_create_form %}
     
     <section class="container p-5 my-5 border">
         <h1>Cadastro de Cursos</h1>
@@ -23,54 +13,78 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="mb-3">
-                                <label for="">{{ curso_form.nome.label }}</label>
-                                {{ curso_form.nome }}
+                                <label for="text" class="form-label">Curso:</label>
+                                <input type="text" class="form-control" id="nome" placeholder="Curso" name="nome">
                             </div>
-                        </div>
+                        </div> 
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="mb-3">
-                                <label for="{{ curso_form.id_for_label }}">{{ curso_form.descricao.label }}</label>
-                                {{ curso_form.descricao }}
+                                <label for="" class="form-label">Descrição:</label>
+                                <textarea type="text" class="form-control" id="descricao" style="height: 100px;" placeholder="Descrição" name="descricao"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <div class="mb-3">
-                                <label for="{{ curso_form.id_for_label }}">{{ curso_form.coordenador.label }}</label>
-                                {{ curso_form.coordenador }}
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Modalidade
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#" class="dropdown-item modalidade-item" data-value="Presencial">Presencial</a></li>
+                                    <li><a href="#" class="dropdown-item modalidade-item" data-value="Online">On-line</a></li>
+                                </ul>
+                                <input style="border: none" type="text" id="modalidade-input" name="modalidade" value="">
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="mb-3">
-                                <label for="{{ curso_form.id_for_label }}">{{ curso_form.periodo.label }}</label>
-                                {{ curso_form.periodo }}
-                                
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Periodo
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="" class="dropdown-item periodo-item" data-value="Matutino">Matutino</a></li>
+                                    <li><a href="" class="dropdown-item periodo-item" data-value="Noturno">Noturno</a></li>
+                                    <li><a href="" class="dropdown-item periodo-item" data-value="Nao Aplica">Não Aplica</a></li>
+                                </ul>
+                                <input style="border: none" type="text" id="periodo-input" name="periodo" value="">
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="mb-3">
-                                <label for="{{ curso_form.id_for_label }}">{{ curso_form.modalidade.label }}</label>
-                                {{ curso_form.modalidade }}
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                    Coordenador                           
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {% for coordenador in coordenadores %} 
+                                    <li>
+                                        <a href="#" class="dropdown-item coordenador-item" data-value="{{ coordenador.id }}">
+                                            {{ coordenador.usuario }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <input type="text" id="coordenador-input" name="coordenador" value="">
+                                <span id="coordenador-nome"></span>  
                             </div>
-                        </div>
-                    </div>
-
+                        </div><br>
+                    </div><br>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <label for="">{{ curso_form.label }}</label>
-                            {{ curso_form.imagem }}
+                        <div class="col-sm-8">
+                            <input type="file" class="form-control" name="imagem" value="File">
                         </div>
-                    </div>
+                    </div><br>
                     
-                    {% for message in messages %}
-                    <div class="alert alert-danger">
-                        <p>{{ message }}</p>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <a class="btn btn-primary" href="{% url 'app:cursos' %}">Cursos</a>
+                        </div>
                     </div>
-                    {% endfor %}
-                    <button class="btn btn-success" type="submit">Cadastrar</button>
                 </form>
             </div>
         </div>
@@ -83,6 +97,4 @@
     </ul>
     {% endif %}
 
-
-</body>
-</html>
+{% endblock %}

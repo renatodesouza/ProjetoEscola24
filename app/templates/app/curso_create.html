@@ -58,7 +58,7 @@
                                 {% for coordenador in coordenadores %} 
                                 <li>
                                     <a href="#" class="dropdown-item coordenador-item" data-value="{{ coordenador.id }}">
-                                        {{ coordenador.usuario.first_name }}
+                                        {{ coordenador.usuario }}
                                     </a>
                                 </li>
                                 {% endfor %}
