@@ -29,7 +29,7 @@ class Turma(models.Model):
                         (QUARTO_SEMESTRE, 'QUARTO SEMESTRE')]
 
     turma = models.CharField("Turma", max_length=7, choices=escolha_turma, default=None)
-    disciplina = models.ManyToManyField(Disciplina)
+    disciplina = models.ManyToManyField(Disciplina, related_name='turma')
     curso = models.ForeignKey(Curso, on_delete=models.PROTECT, related_name='turmas')
     semestre = models.CharField(max_length=20, choices=escolha_semestre, default=PRIMEIRO_SEMESTRE)
 

@@ -146,7 +146,11 @@ class ProfessorView(DetailView):
         return User.objects.filter(id=self.nome.id)
     
     def get_context_data(self, **kwargs):
+        usuario = self.request.user
+        professor = Professor.objects.get(usuario=usuario)
         context = super().get_context_data(**kwargs)
+        context['professor'] = professor
+        context['disciplinas'] = professor.disciplina.all()
         return context
 
 #-------------------------------------------Cursos-------------------------------------------
