@@ -1,78 +1,10 @@
+{% extends 'app/base_usuario.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-<title>Bem vindo {{ professor }}</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
-</style>
-</head>
-<body class="w3-theme-l5">
-<!-- Navbar -->
-<div class="w3-top">
-  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-    
-    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-    <a href="{% url 'app:home' %}" class="w3-bar-item w3-button w3-padding-large "><i class="fa fa-home w3-margin-right"></i>Home</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+{% block content_professor %}
 
-    <div class="w3-dropdown-hover w3-hide-small">
-      <button class="w3-button w3-padding-large" title="Messages" >
-        <i class="fa fa-envelope"></i>
-        <span class="w3-badge w3-right w3-small w3-green">{{ mensagens_recebidas.count }}</span>
-      </button>
-              
-      <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
-        <a href="#" class="w3-bar-item w3-button" data-bs-toggle="modal" data-bs-target="#modalNovaMensagem"><i class=""></i>Nova Mensagem</a>
-        <hr>
-        {% if not mensagens_recebidas %}
-        <a href="" class="w3-bar-item w3-button">Não há mensagens</a>
-        {% else %}
-          {% for mensagem in mensagens_recebidas %}
-            <a href="#" class="w3-bar-item w3-button " data-value="mensagem" 
-              onclick="abrirModalMensagem('{{ mensagem.assunto }}', '{{ mensagem.remetente }}',
-              '{{ mensagem.mensagem }}', '{{ mensagem.dt_envio }}')">
-            <i class=""></i>Mensagem: {{ mensagem.assunto }}</a>
-          {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-
-    <!--NOTIFICACOES PARA AVISAR SOBRE ATIVIDADES -->
-    <div class="w3-dropdown-hover w3-hide-small">
-      <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">{{ atividades.count }}</span></button>     
-      <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
-        {% for atividade in atividades %}
-          <a href="#" class="w3-bar-item w3-button">{{ atividade.titulo }}</a>
-        {% endfor %}
-      </div>
-    </div>
-    <!-- FIM NOTIFICACOES -->
-
-    <a href="{% url 'app:my_logout' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white">Sair</a>
-
-    <!-- IMAGEM DO ALUNO -->
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
-      <img src="{{ aluno.imagem.url }}" class="w3-circle" style="height:30px;width:30px" alt="{{ user }}">
-    </a>
-    <!-- FIM IMAGEM ALUNO -->
-  </div>
-</div>
-<!-- Navbar on small screens -->
-<div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
-</div>
+{% include 'app/partials/nav/_usuario_navbar.html' %}
       
       
 <!--PAGE CONTAINER-->
@@ -87,14 +19,12 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
           
-          <p class="w3-center"><img src="" class="w3-circle" style="height:106px;width:106px" alt="professor"></p>
-          <h4 class="w3-center">Professor</h4>
+          <p class="w3-center"><img src="{{ professor.imagem.url }}" class="w3-circle" style="height:106px;width:106px" alt="professor"></p>
+          <h4 class="w3-center">{{ professor }}</h4>
           <hr>
-          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>RA: {{ aluno.ra }}</p>
-          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Turma {{ turma.turma }}</p>
-          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>Semestre {{ turma.semestre }}</p>
-          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>Curso{{ curso }}</p>
-          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>Email{{ aluno.usuario.email }}</p>
+          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>RP: {{ professor.rp }}</p>
+          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Cargo: Professor</p>
+          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>Email: {{ professor.usuario.email }}</p>
         </div>
       </div>
       <br>
@@ -111,127 +41,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           {% endfor %}
         </div>
 
-        <button  data-bs-toggle="modal" data-bs-target="#id02" class="w3-button w3-block w3-theme-l1 w3-left-align">
-          <i class="fa fa-pencil fa-fw w3-margin-right"></i>Boletim
-        </button>
+        {% include 'app/partials/administracao/_lista_presenca.html' %}
         
-        
-        <div class="modal" id="id02">
-            <div class="modal-dialog modal-xl">
-              <div class="modal-content">
-          
-                <!-- Modal Header -->
-                <div class="modal-header w3-bar w3-theme-d2">
-                  <h4 class="modal-title">Boletim</h4>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-          
-                <div class="modal-body">
-                  <div class="container mt-3">
-                    <div class="row">
-                      <div class="col-md-3">
-                        <h3>Aluno: {{ aluno }}</h3>
-                        <p>RA: {{ aluno.ra }}</p>
-                      </div>
-                      <div class="col-md-5">
-                        <h3>Curso: {{ curso }}</h3>
-                        <p>{{ turma.turma }} | {{ turma.semestre }}</p>
-                      </div>
-                    </div><hr>            
-                    <table class="table  table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col">Disciplina</th>
-                          <th>Turma</th>
-                          <th>C.H</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for disciplina in disciplinas %}
-                          <tr data-bs-toggle="collapse" data-bs-target="#disciplina-{{ disciplina.id }}" class="accordion-toggle">
-                            <td>{{ disciplina.nome }}</td>
-                            <td>{{ turma }}</td>
-                            <td>{{ disciplina.carga_horaria }}</td>
-                          </tr>
-                          <tr>
-                            <td colspan="8">
-                              <div class="collapse" id="disciplina-{{ disciplina.id }}">
-                                <table class="table table-hover table-striped">
-                                  <thead>
-                                    <tr>
-                                      <th>Atividade</th>
-                                      <th>Titulo</th>
-                                      <th>Data Entrega</th>
-                                      <th>Status</th>
-                                      <th>Nota</th>
-                                      <th>Media</th>
-                                      <th>Prova</th>
-                                      <th>TF</th>
-                                      <th>MF</th>
-                                      <th>Situação</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {% for entrega in entregas %}
-                                    
-                                      {% if entrega.atividade.disciplina == disciplina %} 
-                                      <tr>
-                                        <td>{{ entrega.atividade.atividade }}</td>
-                                        <td>{{ entrega.atividade }}</td>
-                                        <td>{{ entrega.dt_entrega }}</td>
-        
-                                        {% if entrega.status == 'COR' %}
-                                        <td><button class="btn btn-success">{{ entrega.status }}</button></td>
-                                        {% elif entrega.status == 'ENT' %}
-                                        <td><button class="btn btn-info">{{ entrega.status }}</button></td>
-                                        {% else %}
-                                        <td><button class="btn btn-warning">{{ entrega.status }}</button></td>
-                                        {% endif %}
-        
-                                        <td>{{ entrega.nota }}</td>
-                                        <td>media</td>
-                                        <td>Prova</td>
-                                        <td>faltas</td>
-                                        <td>media final</td>
-                                        <td>situacao</td>
-                                      </tr>
-                                      {% endif %}
-                                    {% endfor %}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </td>
-                          </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                
-                
-          
-                <!-- Modal footer -->
-                <div class="modal-footer w3-bar w3-theme-d2">
-                  <div class="container"> 
-                    <div class="row">
-                      <div class="col-sm-9">
-                        <p style="margin-bottom: 0%;">TF - Total Faltas</p>
-                        <p style="margin-bottom: 0%;">MF - Media Final</p>
-                        <p style="margin-bottom: 0%;">C.H - Carga Horaria</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12" style="display: grid; justify-content: end;">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-          
-              </div>
-            </div>
-          </div>
         
           <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i>Secretaria</button>
     <div id="Demo3" class="w3-hide w3-container">
@@ -380,3 +191,4 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 </body>
 </html>
+{% endblock %}

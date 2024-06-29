@@ -1,0 +1,67 @@
+<button  data-bs-toggle="modal" data-bs-target="#listaPresencaModal" class="w3-button w3-block w3-theme-l1 w3-left-align">
+    <i class="fa fa-pencil fa-fw w3-margin-right"></i>Lista de chamada
+</button>
+  
+  
+<!-- Modal -->
+<div class="modal fade" id="listaPresencaModal">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Cabeçalho do Modal -->
+      <div class="modal-header w3-bar w3-theme-d2">
+        <h4 class="modal-title">Lista de Presença</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Corpo do Modal -->
+      <div class="modal-body">
+        <div class="container mt-3">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="turmaSelect" class="form-label">Selecione a Turma:</label>
+              <select id="turmaSelect" class="form-select">
+                <option value="">Escolha uma turma</option>
+                <!-- Exemplo de turmas, substitua com dados dinâmicos conforme necessário -->
+                <option value="1">Turma A</option>
+                <option value="2">Turma B</option>
+                <option value="3">Turma C</option>
+              </select>
+            </div>
+          </div>
+          <form id="presencaForm" method="POST" action="">
+            {% csrf_token %}
+            <div id="alunosContainer">
+              <!-- Lista de alunos será carregada aqui -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Presente</th>
+                    <th scope="col">Ausênte</th>
+                  </tr>
+                </thead>
+                <tbody id="alunosList">
+                  <!-- Os alunos serão inseridos aqui dinamicamente -->
+                  <tr data-bs-toggle="collapse" data-bs-target="" class="accordion-toggle">
+                    <td><label for="">Aluno 1</label></td>
+                    <td><input type="radio" id="presente" name="presenca" value="presente"></td>
+                    
+                    <td><input type="radio" id="falta" name="presenca" value="falta"></td>
+                    
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Salvar</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+    
