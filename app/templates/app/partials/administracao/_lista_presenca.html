@@ -23,9 +23,9 @@
               <select id="turmaSelect" class="form-select">
                 <option value="">Escolha uma turma</option>
                 <!-- Exemplo de turmas, substitua com dados dinâmicos conforme necessário -->
-                <option value="1">Turma A</option>
-                <option value="2">Turma B</option>
-                <option value="3">Turma C</option>
+                  {% for turma in turmas %}
+                    <option value="1">{{ turma }}</option>
+                  {% endfor %}
               </select>
             </div>
           </div>

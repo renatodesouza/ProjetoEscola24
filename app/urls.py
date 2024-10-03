@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import HomeView, CursoView, AlunoView, ProfessorView, CursoCreateView, EntregaAtividadeView,\
+from .views import HomeView, CursoView, AlunoView, ProfessorView, ProfessorTemplateView, CursoCreateView, EntregaAtividadeView,\
 create, delete,cursos, my_login, my_logout, boletim, cria_entrega_atividade, edita_entrega_atividade, MensagemViews
 from django.views.generic import TemplateView
 
@@ -13,6 +13,8 @@ urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
     path('curso/<int:pk>/', CursoView.as_view(), name='curso'),
     path('aluno/<int:pk>/', AlunoView.as_view(), name='aluno'),
+
+    path('professor-template/', ProfessorTemplateView.as_view(), name='professor_template'),
     path('professor/<int:pk>/', ProfessorView.as_view(), name='professor'),
     
     path('boletim-aluno/', views.boletim, name='boletim'),

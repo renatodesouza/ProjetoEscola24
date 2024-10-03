@@ -15,9 +15,9 @@ from .models.turma import Turma
 from .models.entrega_atividade import EntregaAtividade
 from .models.mensagem import Mensagem
 
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 
-from .forms import AtividadeForm
+from .forms import AtividadeForm, ProfessorForm
 
 
 
@@ -85,11 +85,11 @@ class CursoAdmin(admin.ModelAdmin):
 
 @admin.register(Disciplina)
 class DisciplinaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'carga_horaria')
+    list_display = ('id' ,'nome', 'carga_horaria')
 
     fieldsets = [
         ('Informações da Disciplina',   {'fields':('nome', 'carga_horaria')}),
-        ('Cursos',               {'fields':('curso',)}),
+        ('Cursos',                      {'fields':('curso',)}),
         ('Imagem',                      {'fields':('imagem',)})
     ]
 
@@ -121,6 +121,8 @@ class MatriculaAdmin(admin.ModelAdmin):
 @admin.register(Professor)
 class ProfessorAdmin(admin.ModelAdmin):
 
+    #form = ProfessorForm
+
     list_display = ('id', 'usuario', 'celular', 'rp', 'imagem')
 
     fieldsets = [
@@ -135,10 +137,18 @@ class ProfessorAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return queryset
         return queryset.filter(usuario=request.user) 
+    
+    # def save_model(self, request, obj, form, change):
+    #     if not obj.usuario:
+
+    #         novo_usuario = User.objects.create_user(username='novo_usuario', password='senha_segura')
+
+    #         obj.usuario = novo_usuario
+    #     super().save_model(request, obj, form, change)
 
 @admin.register(Turma)
 class TurmaAdmin(admin.ModelAdmin):
-    list_display = ('turma', 'curso', 'semestre')
+    list_display = ('id' ,'turma', 'curso', 'semestre')
 
     fieldsets = [
         ('Informações da turma',       {'fields':('curso', 'turma', 'semestre', 'disciplina')}),

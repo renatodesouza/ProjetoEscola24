@@ -23,9 +23,9 @@ class Matricula(models.Model):
     
     
     status = models.CharField(max_length=4, choices=escolha_situacao, default=None)
-    aluno = models.ForeignKey(Aluno, on_delete=models.PROTECT, related_name='matricula')
-    turma = models.ForeignKey(Turma, on_delete=models.PROTECT, related_name='matricula')
-    curso = models.ForeignKey(Curso, on_delete=models.PROTECT, related_name='matricula')
+    aluno = models.ForeignKey(Aluno, on_delete=models.PROTECT, related_name='aluno_matricula')
+    turma = models.ForeignKey(Turma, on_delete=models.PROTECT, related_name='turma_matricula')
+    curso = models.ForeignKey(Curso, on_delete=models.PROTECT, related_name='curso_matricula')
     dt_inicio = models.DateField()
     dt_final = models.DateField()
 
