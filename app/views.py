@@ -110,11 +110,13 @@ class AlunoView(DetailView):
         return User.objects.filter(id=self.nome.id)
 
     def get_context_data(self, **kwargs):
+
         usuario = self.request.user
         matricula = Matricula.objects.get(aluno__usuario=usuario)
         atividades = matricula.turma.atividades.all()
 
         context = super().get_context_data(**kwargs)
+
         context['aluno'] = Aluno.objects.get(usuario=usuario)
         context['cursos'] = Curso.objects.all()
         context['turma'] = matricula.turma
@@ -136,22 +138,46 @@ class AlunoView(DetailView):
         
         return context
     
+
 class ProfessorView(DetailView):
     template_name = 'app/professor.html'
+
     model = Professor
-    context_object_name = 'user'
 
     def get_queryset(self):
-        self.nome = get_object_or_404(User, pk=self.kwargs['pk'])
-        return User.objects.filter(id=self.nome.id)
+        self.usuario = get_object_or_404(User, pk=self.kwargs['pk'])
+        return User.objects.filter(usuario=self.usuario)
     
     def get_context_data(self, **kwargs):
-        usuario = self.request.user
-        professor = Professor.objects.get(usuario=usuario)
+        context = super().get_context_data(**kwargs)
+        context['professor'] = Professor.objects.get(usuario=self.usuario)
+        
+        return context
+
+class ProfessorTemplateView(TemplateView):
+    template_name = 'app/professor.html'
+
+    def get_context_data(self, **kwargs):
+        professor = get_object_or_404(Professor, usuario=self.request.user)
+
         context = super().get_context_data(**kwargs)
         context['professor'] = professor
-        context['disciplinas'] = professor.disciplina.all()
+        context['turmas'] = Turma.objects.filter(disciplina__in=professor.disciplina.all()).prefetch_related('disciplina').distinct()
         return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #-------------------------------------------Cursos-------------------------------------------
 def curso(request, pk):
@@ -283,7 +309,7 @@ def my_login(request):
         if user is not None:
             login(request, user)
             if user.is_staff:
-                return redirect('app:professor', user.id)
+                return redirect('app:professor_template')
             
             messages.success(request, f'Bem vindo {user.first_name}, login efetuado com sucesso.')
             return redirect('app:aluno', user.id)

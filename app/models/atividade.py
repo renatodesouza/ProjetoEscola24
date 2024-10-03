@@ -38,9 +38,9 @@ class Atividade(models.Model):
     dt_inicio = models.DateField('Data Inicio', default=date(year=1900, month=1, day=1))
     dt_fim = models.DateField('Data Fim', default=date(year=1900, month=1, day=1))
 
-    professor = models.ForeignKey(Professor, on_delete=models.PROTECT, related_name='atividades')
-    disciplina = models.ForeignKey(Disciplina, on_delete=models.PROTECT, related_name='atividades')
-    turma = models.ManyToManyField(Turma, blank=True, related_name='atividades')
+    professor = models.ForeignKey(Professor, on_delete=models.PROTECT, related_name='professor_atividades')
+    disciplina = models.ForeignKey(Disciplina, on_delete=models.PROTECT, related_name='disciplina_atividades')
+    turma = models.ManyToManyField(Turma, blank=True, related_name='turma_atividades')
 
     
 

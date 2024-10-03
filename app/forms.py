@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from .models.entrega_atividade import EntregaAtividade
 from .models.atividade import Atividade
 from .models.disciplina import Disciplina
@@ -233,3 +234,11 @@ class MensagemForm(forms.ModelForm):
         fields = ['remetente', 'destinatario', 'assunto', 'mensagem']
 
     
+#------------------Customizando formulario de Porfessor---------------
+
+class ProfessorForm(forms.ModelForm):
+    usuario = forms.ModelChoiceField(queryset=User.objects.all(), required=True, label='Usuário')
+
+    class Meta:
+        model = Professor
+        fields = ['rp', 'usuario', 'celular', 'disciplina', 'imagem']
