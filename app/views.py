@@ -146,7 +146,8 @@ class ProfessorView(DetailView):
 
     def get_queryset(self):
         self.usuario = get_object_or_404(User, pk=self.kwargs['pk'])
-        return User.objects.filter(usuario=self.usuario)
+
+        return Professor.objects.filter(usuario=self.usuario)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -159,9 +160,9 @@ class ProfessorTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         professor = get_object_or_404(Professor, usuario=self.request.user)
-
         context = super().get_context_data(**kwargs)
         context['professor'] = professor
+
         context['turmas'] = Turma.objects.filter(disciplina__in=professor.disciplina.all()).prefetch_related('disciplina').distinct()
         return context
 

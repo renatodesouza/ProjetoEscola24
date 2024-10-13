@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Coordenador(models.Model):
-    usuario = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Usuario')
+    usuario = models.ForeignKey(User, on_delete=models.PROTECT, related_name='usuario_coordenador', verbose_name='Usuario')
     celular = models.CharField(max_length=20, verbose_name='Celular', blank=True)
 
     class Meta:
