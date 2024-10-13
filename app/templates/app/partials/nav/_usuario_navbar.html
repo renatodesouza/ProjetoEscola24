@@ -44,7 +44,12 @@
 
     <!-- IMAGEM DO ALUNO -->
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
-      <img src="{{ aluno.imagem.url }}" class="w3-circle" style="height:30px;width:30px" alt="{{ user }}">
+      {% if user.is_staff %}
+        <img src="{{ professor.imagem.url }}" class="w3-circle" style="height:30px;width:30px" alt="{{ user }}">
+        
+      {% else %}
+        <img src="{{ aluno.imagem.url }}" class="w3-circle" style="height:30px;width:30px" alt="">
+      {% endif %}
     </a>
     <!-- FIM IMAGEM ALUNO -->
   </div>

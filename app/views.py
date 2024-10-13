@@ -113,7 +113,7 @@ class AlunoView(DetailView):
 
         usuario = self.request.user
         matricula = Matricula.objects.get(aluno__usuario=usuario)
-        atividades = matricula.turma.atividades.all()
+        atividades = matricula.turma.turma_atividades.all()
 
         context = super().get_context_data(**kwargs)
 
