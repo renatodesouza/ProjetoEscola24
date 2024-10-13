@@ -16,27 +16,16 @@
     <!-- Left Column -->
     <div class="w3-col m3">
       <!-- Profile -->
-      <div class="w3-card w3-round w3-white">
-        <div class="w3-container">
-          
-          <p class="w3-center"><img src="{{ professor.imagem.url }}" class="w3-circle" style="height:106px;width:106px" alt="professor"></p>
-          <h4 class="w3-center">{{ professor }}</h4>
-          <hr>
-          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>RP: {{ professor.rp }}</p>
-          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Cargo: Professor</p>
-          <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>Email: {{ professor.usuario.email }}</p>
-        </div>
-      </div>
-      <br>
+      {% include 'app/partials/professor/_profile_professor.html' %}
       
       <!-- Accordion Partials-->
       <div class="w3-card w3-round">
         <div class="w3-white">
-          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Disciplinas</button>
-          <div id="Demo1" class="w3-hide w3-container">
-          {% for disciplina in disciplinas %}
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i>Turmas</button>
+          <div id="Demo1" class="w3-hide w3-container w3-theme-l3">
+          {% for turma in turmas %}
           <div>
-              <a href=""><span class="w3-tag w3-small w3-theme-d5">{{ disciplina.nome }}</span></a>
+              <a href=""><span class="w3-tag w3-small ">{{ turma }}</span></a>
           </div>
           {% endfor %}
         </div>
