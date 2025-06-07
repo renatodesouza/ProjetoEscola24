@@ -5,6 +5,10 @@
 {% block content_professor %}
 
 {% include 'app/partials/nav/_usuario_navbar.html' %}
+
+{% include 'app/partials/mensagens/_modal_nova_mensagem.html' %}
+
+{% include 'app/partials/mensagens/_modal_mensagem_recebida.html' %}
       
       
 <!--PAGE CONTAINER-->
@@ -152,6 +156,7 @@
         <!-- FIM MODAL -->
         
         <!-- PARTIALS MENSAGENS RECEBIDAS-->
+        
         {% include 'app/partials/mensagens/_mensagem_recebida.html' %}
         
       </div>

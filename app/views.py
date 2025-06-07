@@ -24,6 +24,7 @@ from app.models.coordenador import Coordenador
 from app.models.mensagem import Mensagem
 
 from .forms import CursoForm, LoginForm, EntregaAtividadeForm, MensagemForm
+from app.services.user_service import get_user_data
 
 
 
@@ -159,11 +160,15 @@ class ProfessorTemplateView(TemplateView):
     template_name = 'app/professor.html'
 
     def get_context_data(self, **kwargs):
-        professor = get_object_or_404(Professor, usuario=self.request.user)
+        
         context = super().get_context_data(**kwargs)
-        context['professor'] = professor
+        usuario = self.request.user
 
-        context['turmas'] = Turma.objects.filter(disciplina__in=professor.disciplina.all()).prefetch_related('disciplina').distinct()
+        tipo_usuario, dados = get_user_data(usuario)
+        context['tipo_usuario'] = tipo_usuario
+        context['dados'] = dados
+        # context['mensagens_recebidas'] = Mensagem.objects.filter(destinatario=usuario)
+        # context['turmas'] = Turma.objects.filter(disciplina__in=professor.disciplina.all()).prefetch_related('disciplina').distinct()
         return context
 
 
