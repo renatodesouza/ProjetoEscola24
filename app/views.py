@@ -121,6 +121,7 @@ class AlunoView(DetailView):
         context['aluno'] = Aluno.objects.get(usuario=usuario)
         context['cursos'] = Curso.objects.all()
         context['turma'] = matricula.turma
+        context['semestre'] = Turma.objects.all()
         context['curso'] = matricula.curso
         context['disciplinas'] = matricula.turma.disciplina.all()
         context['atividades'] = atividades
