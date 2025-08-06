@@ -1,0 +1,141 @@
+<button  data-bs-toggle="modal" data-bs-target="#novoBoletim" class="w3-button w3-block w3-theme-l1 w3-left-align">
+  <i class="fa fa-pencil fa-fw w3-margin-right"></i>Novo Boletim
+</button>
+
+<div class="modal" id="novoBoletim">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <!--Modal Header-->
+      <div class="modal-header w3-bar w3-theme-d2">
+        <h4 class="modal-title">Boletim</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <!--Modal Body-->
+      <div class="modal-body">
+        <div class="container mt-3">
+          <div class="row">
+            <div class="col-md-3">
+              <h3>Aluno: {{ aluno }}</h3>
+              <p>RA: {{ aluno.ra }}</p>
+            </div>
+            <div class="col-md-5">
+              
+              <h3>{{ turma.turma }} | {{ turma.semestre }}</h3>
+              <p>Curso: {{ curso }}</p>
+            </div><hr>
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link w3-theme-d2" id="tab-sem1" data-bs-toggle="tab" data-bs-target="#content-sem1" type="button" role="tab">
+                  {{ turma.semestre }}
+                </button>
+              </li>
+               <li class="nav-item" role="presentation">
+                <button class="nav-link w3-theme-d5" id="tab-sem2" data-bs-toggle="tab" data-bs-target="#content-sem2" type="button" role="tab">
+                  2º Semestre
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content mt-3">
+              <div class="tab-pane fade" id="content-sem1" role="tabpanel">
+                <!--Tabela do 1 semestre-->
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Disciplina</th>
+                      <th>Turma</th>
+                      <th>Media ATV</th>
+                      <th>Prova</th>
+                      <th>Media ATV</th>
+                      <th>Media F</th>
+                      <th>Total faltas</th>
+                      <th>Carga horaria</th>
+                      <th>Situação</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for disciplina in disciplinas %}
+                  <tr data-bs-toggle="collapse" data-bs-target="#disciplina-{{ disciplina.id }}" class="accordion-toggle">
+                    <td style="text-align: center;">{{ disciplina.nome }}</td>
+                    <td style="text-align: center;">{{ turma }}</td>
+                    <td style="text-align: center;">00</td>
+                    <td style="text-align: center;">00</td>
+                    <td style="text-align: center;">00</td>
+                    <td style="text-align: center;">00</td>
+                    <td style="text-align: center;">00</td>
+                    <td style="text-align: center;">{{ disciplina.carga_horaria }}</td>
+                    <td style="text-align: center;">--</td>
+                  </tr>
+                  <tr>
+                    <td colspan="10">
+                      <div class="collapse" id="disciplina-{{ disciplina.id }}">
+                        <table class="table table-hover table-striped">
+                          <thead>
+                            <tr>
+                              <th>Atividade</th>
+                              <th>Titulo</th>
+                              <th>Data Entrega</th>
+                              <th>Status</th>
+                              <th>Nota</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for entrega in entregas %}
+                            
+                              {% if entrega.atividade.disciplina == disciplina %} 
+                              <tr>
+                                <td>{{ entrega.atividade.atividade }}</td>
+                                <td>{{ entrega.atividade }}</td>
+                                <td>{{ entrega.dt_entrega }}</td>
+
+                                {% if entrega.status == 'COR' %}
+                                <td><button class="btn btn-success">{{ entrega.status }}</button></td>
+                                {% elif entrega.status == 'ENT' %}
+                                <td><button class="btn btn-info">{{ entrega.status }}</button></td>
+                                {% else %}
+                                <td><button class="btn btn-warning">{{ entrega.status }}</button></td>
+                                {% endif %}
+
+                                <td>{{ entrega.nota }}</td>
+                                
+                              </tr>
+                              {% endif %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script para trocar os themes dinamicamente -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var tabs = document.querySelectorAll('button[data-bs-toggle="tab"]');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('shown.bs.tab', function(e) {
+        var btn1 = document.getElementById('tab-sem1');
+        var btn2 = document.getElementById('tab-sem2');
+        if (e.target.id === 'tab-sem1') {
+          // 1º semestre ativo → d2, 2º vira d4
+          btn1.classList.replace('w3-theme-d5', 'w3-theme-d2');
+          btn2.classList.replace('w3-theme-d2', 'w3-theme-d5');
+        } else {
+          // 2º semestre ativo → d2, 1º vira d4
+          btn2.classList.replace('w3-theme-d5', 'w3-theme-d2');
+          btn1.classList.replace('w3-theme-d2', 'w3-theme-d5');
+        }
+      });
+    });
+  });
+</script>
