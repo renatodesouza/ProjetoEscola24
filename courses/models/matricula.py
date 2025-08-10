@@ -1,6 +1,6 @@
 from django.db import models
 from .curso import Curso
-from .aluno import Aluno
+from accounts.models import Aluno
 from .turma import Turma
 
 
