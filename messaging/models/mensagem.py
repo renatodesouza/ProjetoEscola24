@@ -1,7 +1,7 @@
 from django.db import models
-from .matricula import Matricula
-from .professor import Professor
-from .aluno import Aluno
+from courses.models import Matricula
+from accounts.models import Professor
+from accounts.models import Aluno
 from django.contrib.auth.models import User
 from datetime import date 
 
