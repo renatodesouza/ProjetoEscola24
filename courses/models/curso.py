@@ -1,5 +1,5 @@
 from django.db import models
-from .coordenador import Coordenador
+from accounts.models.coordenador import Coordenador
 
 
 class Curso(models.Model):

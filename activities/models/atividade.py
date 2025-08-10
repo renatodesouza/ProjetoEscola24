@@ -1,8 +1,8 @@
 from django.db import models
 from datetime import date
-from .disciplina import Disciplina
-from .professor import Professor
-from .turma import Turma
+from courses.models.disciplina import Disciplina
+from accounts.models.professor import Professor
+from courses.models.turma import Turma
 
 
 

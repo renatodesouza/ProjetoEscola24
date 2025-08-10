@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .disciplina import Disciplina
+from courses.models.disciplina import Disciplina
 
 
 
