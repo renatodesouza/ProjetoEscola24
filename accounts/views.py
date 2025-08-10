@@ -7,6 +7,7 @@ from accounts.models import Aluno, Coordenador, Professor
 from courses.models import Matricula, Curso, Disciplina, Turma
 from messaging.models import Mensagem
 from activities.models import EntregaAtividade, Atividade
+from activities.forms import EntregaAtividadeForm
 
 
 class AlunoView(DetailView):
