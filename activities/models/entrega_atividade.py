@@ -1,7 +1,7 @@
 from django.db import models
 from .atividade import Atividade
-from .aluno import Aluno
-from .professor import Professor
+from accounts.models import Aluno
+from accounts.models import Professor
 from datetime import datetime
 
 
