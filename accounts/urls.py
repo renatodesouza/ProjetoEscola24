@@ -1,9 +1,9 @@
 from django.urls import path
-from . import views
+from .views import AlunoView
 
 
 app_name = 'accounts'
 
 urlpatterns = [
-
+    path('aluno/<int:pk>/', AlunoView.as_view(), name='aluno'),
 ]
