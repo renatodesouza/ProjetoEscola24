@@ -18,17 +18,7 @@ class AtividadeForm(forms.ModelForm):
 class EntregaAtividadeForm(forms.ModelForm):
     professores = Professor.objects.all()
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        if not self.instance._state.adding and not self.instance.aluno.has_perm('app.alterar_nota'):
-            self.fields['nota'].disabled = True
-
-        class Meta:
-            model = EntregaAtividade
-            fields = '__all__'
-
-        resposta = forms.CharField(
+    resposta = forms.CharField(
         label = 'Resposta',
         max_length=500,
 
@@ -53,6 +43,17 @@ class EntregaAtividadeForm(forms.ModelForm):
             }
         )
     )
+
+    class Meta:
+        model = EntregaAtividade
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if not self.instance._state.adding and not self.instance.aluno.has_perm('activities.alterar_nota'):
+            self.fields['nota'].disabled = True
+
 
     def clean_campo_limitado(self):
         nota = self.cleaned_data['nota']

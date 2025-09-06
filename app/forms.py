@@ -1,14 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models.entrega_atividade import EntregaAtividade
-from .models.atividade import Atividade
-from .models.disciplina import Disciplina
-from .models.curso import Curso
-from .models.entrega_atividade import EntregaAtividade
-from .models.coordenador import Coordenador
-from .models.professor import Professor
-from .models.aluno import Aluno
-from .models.mensagem import Mensagem
+from courses.models import Curso, Turma, Matricula
+from accounts.models import Aluno, Professor, Coordenador
+from activities.models import Atividade, EntregaAtividade
+from messaging.models import Mensagem
+from messaging.models import Mensagem
 
 
 

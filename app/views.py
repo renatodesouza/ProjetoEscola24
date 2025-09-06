@@ -13,15 +13,10 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 
 
-from .models.curso import Curso
-from .models.turma import Turma
-from .models.aluno import Aluno
-from .models.professor import Professor
-from .models.matricula import Matricula
-from .models.atividade import Atividade
-from .models.entrega_atividade import EntregaAtividade
-from app.models.coordenador import Coordenador
-from app.models.mensagem import Mensagem
+from courses.models import Curso, Turma, Matricula
+from accounts.models import Aluno, Professor, Coordenador
+from activities.models import Atividade, EntregaAtividade
+from messaging.models import Mensagem
 
 from .forms import CursoForm, LoginForm, EntregaAtividadeForm, MensagemForm
 from app.services.user_service import get_user_data

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
-from app.models.professor import Professor
-from app.models.aluno import Aluno
+from accounts.models import Aluno, Professor
+
 
 
 def get_user_data(usuario):
