@@ -1,0 +1,11 @@
+<div class="w3-card w3-round w3-white w3-hide-small">
+    <div class="w3-container">
+        <p>Cursos</p>
+        <p>
+        {% for curso in cursos %}
+            <a href="{% url 'app:curso' curso.id %}"><span class="w3-tag w3-small w3-theme-d5">{{ curso.nome }}</span></a>
+        {% endfor %}
+        </p>
+    </div>
+</div>
+<br>

@@ -1,0 +1,89 @@
+{% extends 'accounts/base_usuario.html' %}
+{% load static %}
+
+{% block content_aluno %}
+<!-- Navbar -->
+{% include 'accounts/partials/aluno/_usuario_navbar.html' %}
+
+{% include 'messaging/partials/_modal_nova_mensagem.html' %}
+
+{% include 'messaging/partials/_modal_mensagem_recebida.html' with mensagens_recebidas=mensagens_recebidas %}
+
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- INFORMACOES DO ALUNO FOTO RA ETC... -->
+    <!-- Left Column -->
+    <div class="w3-col m3">
+      <!-- Profile -->
+      {% include 'accounts/partials/aluno/_profile_aluno.html' %}
+      
+      <!-- Accordion Partials-->
+      <div class="w3-card w3-round">
+        <div class="w3-white">
+          {% include 'courses/partials/_disciplina.html' %}
+
+          {% include 'activities/partials/_boletim.html' %}
+
+          {% include 'activities/partials/_novo_boletim.html' %}
+          
+          {% include 'accounts/partials/aluno/_secretaria.html' %}
+        </div>      
+      </div>
+      <br>
+      
+      <!-- Cursos Partials--> 
+      {% include 'courses/partials/_cursos.html' %}
+    </div>
+    
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+    
+      {% include 'accounts/partials/aluno/_pesquisa.html' %}
+
+      <!-- EXIBIR INFORMACOES IMPORTANTES DE DISCIPLINAS ATIVIDADES -->
+      {% include 'activities/partials/_atividades.html'  with atividades=atividades %}
+      <!-- FIM INFORMACOES -->
+    </div>
+    <!-- End Middle Column -->
+    
+    <!-- ESPACO PARA AVISOS -->
+      <!-- Right Column -->
+      <div class="w3-col m2">
+        <!--PARTIALS ATIVIDADE PARA ENTREGAR-->
+        {% include 'activities/partials/_entrega_atividade.html' %}
+
+        <!-- MODAL INICIO -->
+          {% include 'activities/partials/_modal_entrega_atividade_form.html' %}
+          {% include 'activities/partials/_modal_edita_entrega_atividade_form.html' %}
+        <!-- FIM MODAL -->
+        
+        <!-- PARTIALS MENSAGENS RECEBIDAS-->
+        {% include 'messaging/partials/_mensagem_recebida.html' with mensagens_recebidas=mensagens_recebidas %}
+        
+      </div>
+      <!-- End Right Column -->
+  </div>
+  <!-- End Grid -->
+
+<!-- End Page Container -->
+</div>
+<br>
+
+
+<!-- Footer-->
+{% include 'accounts/partials/footer/_footer.html' %}
+{% endblock %}
+
+ <!-- Inclua as bibliotecas JS do Bootstrap 5 no final do arquivo -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+ 
+
+
+
+
+
+
