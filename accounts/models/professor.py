@@ -16,3 +16,6 @@ class Professor(models.Model):
     
     def get_registro(self):
         return self.rp
+    
+    def get_imagem(self):
+        return self.imagem

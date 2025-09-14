@@ -16,3 +16,6 @@ class Aluno(models.Model):
     
     def get_registro(self):
         return self.ra
+    
+    def get_imagem(self):
+        return self.imagem
