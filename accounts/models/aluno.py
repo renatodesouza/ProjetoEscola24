@@ -13,3 +13,6 @@ class Aluno(models.Model):
                                        
     def __str__(self):
         return self.usuario.username
+    
+    def get_registro(self):
+        return self.ra
