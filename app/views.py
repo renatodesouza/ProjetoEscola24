@@ -136,36 +136,36 @@ class AlunoView(DetailView):
         return context
     
 
-class ProfessorView(DetailView):
-    template_name = 'app/professor.html'
+# class ProfessorView(DetailView):
+#     template_name = 'app/professor.html'
 
-    model = Professor
+#     model = Professor
 
-    def get_queryset(self):
-        self.usuario = get_object_or_404(User, pk=self.kwargs['pk'])
+#     def get_queryset(self):
+#         self.usuario = get_object_or_404(User, pk=self.kwargs['pk'])
 
-        return Professor.objects.filter(usuario=self.usuario)
+#         return Professor.objects.filter(usuario=self.usuario)
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['professor'] = Professor.objects.get(usuario=self.usuario)
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['professor'] = Professor.objects.get(usuario=self.usuario)
         
-        return context
+#         return context
 
-class ProfessorTemplateView(TemplateView):
-    template_name = 'app/professor.html'
+# class ProfessorTemplateView(TemplateView):
+#     template_name = 'app/professor.html'
 
-    def get_context_data(self, **kwargs):
+#     def get_context_data(self, **kwargs):
         
-        context = super().get_context_data(**kwargs)
-        usuario = self.request.user
+#         context = super().get_context_data(**kwargs)
+#         usuario = self.request.user
 
-        tipo_usuario, dados = get_user_data(usuario)
-        context['tipo_usuario'] = tipo_usuario
-        context['dados'] = dados
-        # context['mensagens_recebidas'] = Mensagem.objects.filter(destinatario=usuario)
-        # context['turmas'] = Turma.objects.filter(disciplina__in=professor.disciplina.all()).prefetch_related('disciplina').distinct()
-        return context
+#         tipo_usuario, dados = get_user_data(usuario)
+#         context['tipo_usuario'] = tipo_usuario
+#         context['dados'] = dados
+#         # context['mensagens_recebidas'] = Mensagem.objects.filter(destinatario=usuario)
+#         # context['turmas'] = Turma.objects.filter(disciplina__in=professor.disciplina.all()).prefetch_related('disciplina').distinct()
+#         return context
 
 
 
@@ -298,28 +298,28 @@ def boletim(request):
 
 
 
-def my_login(request): 
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
+# def my_login(request): 
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
 
-        if form.is_valid():
-            nome = form.cleaned_data['usuario']
-            pswd = form.cleaned_data['password']
+#         if form.is_valid():
+#             nome = form.cleaned_data['usuario']
+#             pswd = form.cleaned_data['password']
 
-            user = authenticate(request, username=nome, password=pswd)
+#             user = authenticate(request, username=nome, password=pswd)
     
-        if user is not None:
-            login(request, user)
-            if user.is_staff:
-                return redirect('app:professor_template')
+#         if user is not None:
+#             login(request, user)
+#             if user.is_staff:
+#                 return redirect('app:professor_template')
             
-            messages.success(request, f'Bem vindo {user.first_name}, login efetuado com sucesso.')
-            return redirect('app:aluno', user.id)
-        else:
-            messages.error(request, 'Usuario ou senha incorretos')
-            return redirect('app:home')
+#             messages.success(request, f'Bem vindo {user.first_name}, login efetuado com sucesso.')
+#             return redirect('app:aluno', user.id)
+#         else:
+#             messages.error(request, 'Usuario ou senha incorretos')
+#             return redirect('app:home')
         
-    return redirect('app:home')
+#     return redirect('app:home')
 
 
 
@@ -402,7 +402,7 @@ class MensagemViews(CreateView):
     model = Mensagem
     
     form_class = MensagemForm
-    success_url = reverse_lazy('app:aluno')
+    success_url = reverse_lazy('accounts:aluno')
 
     def get_context_data(self, **kwargs):
         context = super(MensagemViews, self).get_context_data(**kwargs)
@@ -428,5 +428,5 @@ class MensagemViews(CreateView):
                 
 
                 
-            return redirect('app:aluno', self.request.user.id)
-        return redirect('app:aluno', self.request.user.id)
+            return redirect('accounts:aluno', self.request.user.id)
+        return redirect('accounts:aluno', self.request.user.id)

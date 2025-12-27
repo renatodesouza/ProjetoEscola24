@@ -3,7 +3,7 @@
         <p>Cursos</p>
         <p>
         {% for curso in cursos %}
-            <a href="{% url 'app:curso' curso.id %}"><span class="w3-tag w3-small w3-theme-d5">{{ curso.nome }}</span></a>
+            <a href="{% url 'courses:curso' curso.id %}"><span class="w3-tag w3-small w3-theme-d5">{{ curso.nome }}</span></a>
         {% endfor %}
         </p>
     </div>
