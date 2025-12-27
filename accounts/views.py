@@ -50,17 +50,14 @@ class AlunoView(DetailView):
         return context
     
 class ProfessorView(DetailView):
-    template_name = 'app/professor.html'
-
     model = Professor
-
-    def get_queryset(self):
-        self.usuario = get_object_or_404(User, pk=self.kwargs['pk'])
-
-        return Professor.objects.filter(usuario=self.usuario)
+    template_name = 'accounts/professor.html'
+    context_object_name = 'professor'
+    
+    def get_object(self, queryset = None):
+        return get_object_or_404(Professor, usuario__pk=self.kwargs['pk'])
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['professor'] = Professor.objects.get(usuario=self.usuario)
-        
+        context['perfil'] = self.get_object()
         return context

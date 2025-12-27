@@ -1,10 +1,15 @@
+{% load static %}
+{% load account_tags %}
 <div class="w3-card w3-round w3-white">
   <div class="w3-container">
     <br>
-    <p class="w3-center"><img src="{{ object.get_imagem.url }}" class="w3-circle" style="height:106px;width:106px" alt="{{ aluno }}"></p>
-    <h4 class="w3-center">{{ user.first_name }}</h4>
+    <p class="w3-center"><img src="{{ aluno.usuario|get_avatar }}" 
+      class="w3-circle w3-card-2" 
+      alt="{{ aluno }}"
+      style="width: 120px; max-width: 30%; aspect-ratio: 1/1; object-fit: cover;" alt="{{ aluno }}"></p>
+    <h4 class="w3-center">{{ aluno.usuario.first_name }}</h4>
     <hr>
-    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Registro: {{ object.get_registro}}</p>
+    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>Registro: {{ aluno.ra}}</p>
     <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{ turma.turma }}</p>
     <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{ turma.semestre }}</p>
     <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>{{ curso }}</p>

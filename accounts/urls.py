@@ -6,5 +6,5 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('aluno/<int:pk>/', AlunoView.as_view(), name='aluno'),
-    path('professor/<int:pk>/', ProfessorView.as_view, name='professor'),
+    path('professor/<int:pk>/', ProfessorView.as_view(), name='professor'),
 ]

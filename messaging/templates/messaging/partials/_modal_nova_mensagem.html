@@ -39,7 +39,7 @@
         <hr>
         <div class="row">
           <div class="col-sm-12">
-            <form action="{% url 'app:mensagem' %}" method="POST">
+            <form action="{% url 'messaging:mensagem' %}" method="POST">
               {% csrf_token %}
               <div>
                   <label class="form-label" for="">Assunto: </label>

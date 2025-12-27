@@ -3,7 +3,7 @@
   <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
     
     <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-    <a href="{% url 'app:home' %}" class="w3-bar-item w3-button w3-padding-large "><i class="fa fa-home w3-margin-right"></i>Home</a>
+    <a href="{% url 'core:home' %}" class="w3-bar-item w3-button w3-padding-large "><i class="fa fa-home w3-margin-right"></i>Home</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
 
@@ -40,15 +40,17 @@
     </div>
     <!-- FIM NOTIFICACOES -->
 
-    <a href="{% url 'app:my_logout' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white">Sair</a>
+    <a href="{% url 'core:my_logout' %}" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white">Sair</a>
 
     <!-- IMAGEM DO ALUNO -->
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding w3-hover-white" title="My Account">
       {% if user.is_staff %}
         <img src="{{ professor.imagem.url }}" class="w3-circle" style="height:30px;width:30px" alt="{{ user }}">
         
       {% else %}
-        <img src="{{ aluno.imagem.url }}" class="w3-circle" style="height:30px;width:30px" alt="">
+        <img src="{{ aluno.imagem.url }}" class="w3-circle" 
+         style="height:35px; width:35px; object-fit: cover; vertical-align: middle;" 
+         alt="Avatar" alt="">
       {% endif %}
     </a>
     <!-- FIM IMAGEM ALUNO -->
